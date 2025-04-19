@@ -2,9 +2,8 @@ import os
 import cv2
 import numpy as np
 import pandas as pd
-import requests
 from datetime import datetime
-from flask import Flask,Response, request, jsonify
+from flask import Flask,Response, jsonify
 from flask_cors import CORS
 import csv
 from deepface import DeepFace
