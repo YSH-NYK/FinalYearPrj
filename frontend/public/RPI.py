@@ -23,7 +23,6 @@ person_detected = False
 lock = threading.Lock()
 
 def capture_frames():
-    """Thread to capture frames from the camera and run YOLO inference."""
     global frame, person_detected
     while True:
         with lock:
@@ -55,8 +54,6 @@ capture_thread = threading.Thread(target=capture_frames, daemon=True)
 capture_thread.start()
 
 def generate_frames():
-    """Generate frames for the Flask video feed."""
-    global frame
     while True:
         with lock:
             if frame is None:
