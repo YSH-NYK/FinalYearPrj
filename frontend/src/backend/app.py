@@ -12,7 +12,7 @@ import re
 import time
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
+CORS(app) 
 
 # Directory paths
 faces_directory = "static/faces"
@@ -72,7 +72,6 @@ class LocalOCRScanner:
 
     def preprocess_image(self, frame):
         """Preprocess image for better OCR results."""
-        # Convert to grayscale
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         
         # Apply adaptive thresholding
@@ -88,9 +87,6 @@ class LocalOCRScanner:
     def extract_uid(self, card_type, text):
         """Extract UID and formatted name based on card type."""
         match = None
-        # name_match = re.search(r'\b[A-Z][a-z]+\s[A-Z][a-z]+(?:\s[A-Z][a-z]+)?\b', name)
-        # formatted_name = name_match.group(0) if name_match else None
-
         if card_type == 1:  # Student ID
             match = re.search(r'\b\d{9}\b', text)
         elif card_type == 2:  # Aadhar
@@ -107,10 +103,8 @@ class LocalOCRScanner:
 def register_face():
     tesseract_path = r"C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
     tessdata_path = r"C:\\Program Files\\Tesseract-OCR\\tessdata"
-    # ip_camera_url = "http://192.168.137.117:8080/video"
 
     try:
-        # Initialize scanner
         scanner = LocalOCRScanner(tesseract_path, tessdata_path)
     except FileNotFoundError as e:
         print(f"Setup Error: {str(e)}")
@@ -147,14 +141,7 @@ def register_face():
     print("\nScanning for ID cards...")
 
     while True:
-        ret, frame = cap.read()
-        
-        if not ret:
-            print("Error: Failed to get frame. Attempting to reconnect...")
-            cap.release()
-            cap = cv2.VideoCapture(1)
-            time.sleep(1)
-            continue
+        frame = cap.read()
         
         # Create a copy for display
         display_frame = frame.copy()
